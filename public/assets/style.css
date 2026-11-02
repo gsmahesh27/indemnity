@@ -62,3 +62,15 @@ small{color:#65705d;font-size:11px}.privacy{color:#67725f;font-size:10px}.empty-
   .date-row{gap:12px}
   .explainer{gap:18px}
 }
+
+.allowance-fields{grid-column:1/-1;min-width:0;margin:0 0 16px;padding:12px;border:1px solid var(--line);border-radius:8px;background:#f8faf5}
+.allowance-fields legend{font-size:11px;padding:0 5px}
+.allowance-fields legend span{font-weight:400;color:#65705d;margin-left:7px;font-size:10px}
+.allowance-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.allowance-grid .field{margin-bottom:0}.allowance-grid label{font-size:10px;line-height:1.5}
+.allowance-grid input{height:38px;padding:0 8px}
+.allowance-fields>small{font-size:10px;line-height:1.5;margin-top:9px}
+.breakdown .wage-total{font-weight:700;background:#e3ead9;padding:9px;border-radius:5px}
+[hidden]{display:none!important}
+@media screen and (max-width:1100px){.allowance-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media print{.allowance-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}

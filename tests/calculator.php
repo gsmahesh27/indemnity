@@ -22,4 +22,17 @@ check('Fixed-term resignation requires review', calc(['reason' => 'fixed_resigna
 foreach ([['salary' => '-1'], ['salary' => 'NaN'], ['salary' => 'INF'], ['start' => '2023-02-29'], ['end' => '2019-01-01'], ['end' => '2020-01-01'], ['basis' => 'other'], ['reason' => 'other'], ['start' => '2020-01-01<script>']] as $bad) {
  check('Reject invalid input ' . json_encode($bad), !empty(calc($bad)['errors']));
 }
+$allowances = ['salary' => '500', 'housing' => '150', 'transport' => '50', 'incentive' => '100', 'other' => '20'];
+check('All regular monthly components form wage basis', near(calc($allowances)['wage'], 820));
+check('Allowance-inclusive first tier', near(calc($allowances)['total'], 820 / 26 * 75));
+check('Allowance-inclusive second tier', near(calc($allowances + ['end' => '2026-01-01'])['total'], 820 / 26 * 75 + 820));
+check('Cap includes regular allowances', near(calc($allowances + ['end' => '2070-01-01'])['total'], 820 * 18));
+check('Resignation applies to allowance-inclusive benefit', near(calc($allowances + ['reason' => 'resignation'])['total'], 820 / 26 * 75 / 2));
+check('Daily pay does not add monthly components', near(calc(['basis' => 'daily', 'salary' => '10', 'housing' => '150'])['total'], 500));
+check('Blank optional allowance means zero', near(calc(['housing' => ''])['wage'], 260));
+foreach (['housing', 'transport', 'incentive', 'other'] as $key) {
+ check("Reject negative $key", isset(calc([$key => '-1'])['errors'][$key]));
+ check("Reject invalid $key", isset(calc([$key => 'not-a-number'])['errors'][$key]));
+}
+check('Reject excessive combined wage', isset(calc(['salary' => '999999', 'housing' => '2'])['errors']['salary']));
 echo "$count checks passed.\n";

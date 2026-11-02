@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Indemnity;
 
 use DateTimeImmutable;
-use InvalidArgumentException;
 
 final class Calculator
 {
@@ -27,6 +26,23 @@ final class Calculator
         }
         $basis = $input['basis'] ?? '';
         $reason = $input['reason'] ?? '';
+        $components = ['basic' => $salary === false ? 0.0 : $salary];
+        if ($basis === 'monthly') {
+            foreach (['housing', 'transport', 'incentive', 'other'] as $key) {
+                $raw = $input[$key] ?? '';
+                $amount = $raw === '' ? 0.0 : filter_var($raw, FILTER_VALIDATE_FLOAT);
+                if ($amount === false || !is_finite($amount) || $amount < 0 || $amount > 1000000) {
+                    $errors[$key] = 'Enter 0 or a positive amount up to 1,000,000 KWD.';
+                } else {
+                    $components[$key] = $amount;
+                }
+            }
+            if (!$errors) {
+                $salary = array_sum($components);
+                if ($salary > 1000000) $errors['salary'] = 'The combined monthly wage must not exceed 1,000,000 KWD.';
+            }
+        }
+
         if (!in_array($basis, ['monthly', 'daily'], true)) $errors['basis'] = 'Choose a wage basis.';
         if (!in_array($reason, ['employer', 'expiry', 'resignation', 'fixed_resignation', 'article41'], true)) $errors['reason'] = 'Choose how employment ended.';
         if (isset($dates['start'], $dates['end']) && $dates['end'] <= $dates['start']) $errors['end'] = 'The end date must be after the start date.';
@@ -56,6 +72,7 @@ final class Calculator
         }
         if ($reason === 'article41') $factor = 0.0;
         return [
+            'wage' => $salary, 'components' => $components,
             'errors' => [], 'years' => $years, 'duration' => $start->diff($end),
             'firstYears' => $firstYears, 'laterYears' => $laterYears,
             'firstRate' => $firstRate, 'laterRate' => $laterRate,
