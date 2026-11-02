@@ -2,3 +2,63 @@
 
 /* Keep helper text legible on light surfaces. */
 small{color:#65705d;font-size:11px}.privacy{color:#67725f;font-size:10px}.empty-state p,.result-foot,.explainer p{color:#66735b}.result-top .eyebrow{color:#5d714c}summary{color:#596b4d}footer{color:#66735b}
+
+/* Compact workspace: put the calculator above the fold on desktop. */
+@media screen {
+  .site-header{height:64px;max-width:1320px;padding:0 24px}
+  main{max-width:1320px;padding:0 24px}
+  .intro{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:24px 0 22px}
+  h1{font-size:34px;letter-spacing:-1.1px;line-height:1.2;margin:9px 0 0}
+  .intro p{font-size:12px;line-height:1.7;flex-shrink:0}
+  .calculator-layout{grid-template-columns:1.15fr 1fr;gap:20px;align-items:start}
+  .form-card,.result-card{padding:22px}
+  .section-heading{margin-bottom:20px}
+  #calculator-form{display:grid;grid-template-columns:1fr 1fr;column-gap:20px;align-items:start}
+  .basis-field{margin-bottom:16px;min-width:0}
+  .field{margin-bottom:16px;min-width:0}
+  .date-row{grid-column:1/-1;gap:20px}
+  #calculator-form>.field:has(#reason),.calculate,.privacy,.error-summary{grid-column:1/-1}
+  .segmented span{padding:11px 6px}
+  .privacy{margin:11px 0 0}
+  .result-card{min-height:430px;align-self:stretch}
+  .empty-state{padding:18px 0}
+  .estimate-icon{width:49px;height:55px;margin-bottom:17px}
+  .empty-state h2{font-size:23px}
+  .empty-state p{margin-top:10px}
+  .empty-amount{margin-top:12px}
+  .result-foot{padding-top:12px}
+  .result-card>h2{margin-top:16px}
+  .amount{font-size:37px;margin-top:6px}
+  .result-caption{margin:8px 0}
+  .breakdown{margin-top:5px}
+  .breakdown h3{margin:8px 0;padding-bottom:3px}
+  .breakdown>div{padding:8px 0}
+  .breakdown .total-line{padding-top:11px}
+  .result-note,.result-warning{margin:10px 0}
+  .print-button{margin-top:8px}
+  .explainer{padding:20px 0;gap:30px}
+  .explainer h3{margin:7px 0 5px}
+  summary{padding:14px 0}
+  footer{padding:16px 0}
+}
+@media screen and (max-width:900px) {
+  .intro{align-items:flex-start;gap:16px}
+  h1{font-size:29px}
+  .intro p{max-width:190px}
+  #calculator-form{display:block}
+  .calculator-layout{grid-template-columns:1fr 1fr;gap:16px}
+}
+@media screen and (max-width:650px) {
+  .site-header{height:60px;padding:0 16px}
+  main{padding:0 16px}
+  .intro{display:block;padding:20px 0}
+  .intro .eyebrow{font-size:9px;letter-spacing:1.3px}
+  h1{font-size:29px;max-width:360px;line-height:1.15}
+  .intro p{max-width:none;margin-top:10px}
+  .intro p br{display:none}
+  .calculator-layout{grid-template-columns:1fr;gap:16px}
+  .form-card,.result-card{padding:20px}
+  .result-card{min-height:330px}
+  .date-row{gap:12px}
+  .explainer{gap:18px}
+}

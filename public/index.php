@@ -25,7 +25,7 @@ function attrs(string $key): string { global $errors; return isset($errors[$key]
 <body>
 <header class="site-header"><a class="brand" href="./" aria-label="Kuwait EOS home"><span class="brand-icon">K<span>°</span></span><span>Kuwait<span class="brand-light"> EOS</span></span></a><span class="header-note"><span class="status-dot"></span> Private sector · Law No. 6 of 2010</span></header>
 <main>
-<section class="intro"><div class="eyebrow">A CLEARER PICTURE OF YOUR BENEFITS</div><h1>Your service.<br>Your <em>entitlement.</em></h1><p>Estimate your end-of-service indemnity in Kuwait.<br>Just a few details. A calculation you can understand.</p></section>
+<section class="intro"><div><div class="eyebrow">KUWAIT END-OF-SERVICE CALCULATOR</div><h1>Your service. Your <em>entitlement.</em></h1></div><p>Estimate your indemnity with a clear,<br>itemized calculation.</p></section>
 <div class="calculator-layout">
 <section class="card form-card" aria-labelledby="details-title"><div class="section-heading"><span class="step">01</span><div><h2 id="details-title">Employment details</h2><p>All amounts are in Kuwaiti dinars (KWD).</p></div></div>
 <?php if ($errors): ?><div class="error-summary" role="alert">Please check the highlighted fields.</div><?php endif ?>
