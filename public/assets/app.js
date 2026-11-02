@@ -35,4 +35,3 @@ document.getElementById('calculator-form').addEventListener('invalid', event => 
   const firstInvalid = event.currentTarget.querySelector('input:invalid, select:invalid') || event.target;
   showView(firstInvalid.closest('.pay-panel') ? 'pay' : 'service');
 }, true);
-
