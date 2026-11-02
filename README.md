@@ -1,6 +1,6 @@
 # Kuwait EOS
 
-A dependency-free PHP calculator for Kuwait private-sector end-of-service indemnity, with a compact responsive interface, server-side validation, an itemized calculation, and print support. No database, accounts, third-party assets, or JavaScript requirement for calculating.
+A dependency-free PHP calculator for Kuwait private-sector end-of-service indemnity, with a compact responsive interface, server-side validation, an itemized calculation, and print support. Mobile uses Pay / Service / Estimate steps; desktop shows form and results together. Wage components expand on demand and legal notes open in a dialog. Normal states were checked without page scrolling at 375×667, 390×844, 1024×768, 1366×600, 1366×768 and 1920×1080. Expanded details, validation messages, smaller viewports, enlarged text and the on-screen keyboard can require scrolling; content is never clipped to force a fit. No database, accounts, third-party assets, or JavaScript requirement for calculating.
 
 ## Run
 
