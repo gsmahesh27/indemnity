@@ -17,3 +17,5 @@
 #about-dialog{max-width:480px}.about-content{padding:16px 0 8px}.about-content h2{font-size:28px;margin:10px 0 16px}.about-content p{font-size:13px;line-height:1.8;color:var(--muted)}.about-content h3{font-size:14px;margin-top:24px}.contact-email{display:inline-block;font-size:15px;font-weight:600;text-underline-offset:4px;overflow-wrap:anywhere}.about-content .about-note{font-size:11px;border-top:1px solid var(--line);padding-top:16px;margin-top:24px}
 @media screen and (max-width:760px){.bottom-bar>span{max-width:135px}.footer-actions{gap:12px}.footer-actions button{font-size:10px}}
 @media screen{body:not(.js) #open-about{display:none}}
+
+.about-link{font-size:10px;color:var(--muted);text-decoration:none}.about-link:hover{text-decoration:underline;text-underline-offset:3px}.about-page{max-width:560px;padding-top:32px}.about-page .card{background:white}.about-back{display:inline-block;margin-bottom:20px;font-size:12px;text-decoration:none}.about-page .about-content{padding-top:0}

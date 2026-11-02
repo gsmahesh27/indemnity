@@ -45,4 +45,4 @@ No submitted fields are intentionally persisted. Hosting infrastructure may main
 
 ## Shared hosting
 
-For a domain-root installation, copy `public/index.php` and `public/assets/` into `htdocs/`, and `src/` into `htdocs/src/`. The entry point supports both this layout and the standard `public/` web root. Upload only application files; leave tests and documentation out of the public host. The About dialog includes the project contact, gsmahesh@gmail.com.
+For a domain-root installation, copy `public/index.php`, `public/about.php` and `public/assets/` into `htdocs/`, and `src/` into `htdocs/src/`. The entry point supports both this layout and the standard `public/` web root. Upload only application files; leave tests and documentation out of the public host. The discreet footer About link opens a separate page with the project contact, gsmahesh@gmail.com.

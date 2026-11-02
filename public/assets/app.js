@@ -36,6 +36,3 @@ document.getElementById('calculator-form').addEventListener('invalid', event => 
   showView(firstInvalid.closest('.pay-panel') ? 'pay' : 'service');
 }, true);
 
-const aboutDialog = document.getElementById('about-dialog');
-document.getElementById('open-about').addEventListener('click', () => aboutDialog.showModal());
-document.getElementById('close-about').addEventListener('click', () => aboutDialog.close());
