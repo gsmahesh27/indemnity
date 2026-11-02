@@ -42,3 +42,7 @@ Reference: [Public Authority for Manpower](https://www.manpower.gov.kw/), Labour
 - `tests/calculator.php`: dependency-free boundary, cap, proration and validation checks.
 
 No submitted fields are intentionally persisted. Hosting infrastructure may maintain access logs; configure retention for your deployment.
+
+## Shared hosting
+
+For a domain-root installation, copy `public/index.php` and `public/assets/` into `htdocs/`, and `src/` into `htdocs/src/`. The entry point supports both this layout and the standard `public/` web root. Upload only application files; leave tests and documentation out of the public host. The About dialog includes the project contact, gsmahesh@gmail.com.

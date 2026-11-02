@@ -35,3 +35,7 @@ document.getElementById('calculator-form').addEventListener('invalid', event => 
   const firstInvalid = event.currentTarget.querySelector('input:invalid, select:invalid') || event.target;
   showView(firstInvalid.closest('.pay-panel') ? 'pay' : 'service');
 }, true);
+
+const aboutDialog = document.getElementById('about-dialog');
+document.getElementById('open-about').addEventListener('click', () => aboutDialog.showModal());
+document.getElementById('close-about').addEventListener('click', () => aboutDialog.close());
