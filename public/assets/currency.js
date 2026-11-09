@@ -1,6 +1,6 @@
 'use strict';
 const endpoint = 'https://open.er-api.com/v6/latest/KWD';
-const dialog = document.getElementById('currency-dialog');
+const result = document.getElementById('currency-result');
 
 // Rates are indicative daily quotes. Reject invalid, future, or stale responses.
 export function validateRates(payload, now = Date.now()) {
@@ -17,8 +17,8 @@ export function validateRates(payload, now = Date.now()) {
   return { rates, updated };
 }
 
-if (dialog) {
-  const base = Number(dialog.dataset.kwd);
+if (result) {
+  const base = Number(result.dataset.kwd);
   const select = document.getElementById('display-currency');
   const value = document.getElementById('converted-value');
   const codeLabel = document.getElementById('converted-code');
@@ -30,22 +30,27 @@ if (dialog) {
   let pending = null;
   let failure = false;
 
+  // Approximate community-size priority, not a verified current population ranking.
+  // Keep this order stable when the rate response adds more currencies.
+  const priority = ['INR', 'EGP', 'BDT', 'PHP', 'SYP', 'SAR', 'LKR', 'NPR', 'PKR',
+    'JOD', 'YER', 'IRR', 'LBP', 'SDG', 'AFN', 'IDR', 'TRY', 'ETB', 'CNY', 'KES'];
+  const countryLabels = new Map([...select.options].map(option => [option.value, option.textContent]));
+  const meta = document.getElementById('currency-meta');
+
   function populateCurrencies(rates) {
     const selected = select.value;
     const names = typeof Intl.DisplayNames === 'function'
       ? new Intl.DisplayNames(['en'], { type: 'currency' }) : null;
-    const codes = Object.keys(rates).sort();
+    const codes = [...priority, ...Object.keys(rates).filter(code =>
+      !priority.includes(code) && code !== 'KWD').sort(), 'KWD'];
+    if (!codes.includes(selected)) codes.push(selected);
     select.replaceChildren(...codes.map(code => {
       const option = document.createElement('option');
       option.value = code;
-      option.textContent = code + (names ? ' · ' + names.of(code) : '');
+      option.textContent = countryLabels.get(code) || code + (names ? ' · ' + names.of(code) : '');
+      if (!rates[code]) option.textContent += ' · unavailable';
       return option;
     }));
-    // Retain an unavailable selection so it is reported, never silently converted to KWD.
-    if (!codes.includes(selected)) {
-      const option = new Option(selected + ' · unavailable', selected);
-      select.add(option);
-    }
     select.value = selected;
   }
 
@@ -53,6 +58,7 @@ if (dialog) {
     const code = select.value;
     const rate = code === 'KWD' ? 1 : cached?.rates[code];
     codeLabel.textContent = code;
+    meta.hidden = code === 'KWD';
     const available = Number.isFinite(rate) && rate > 0 && Number.isFinite(base * rate);
     value.textContent = available ? new Intl.NumberFormat('en', {
       style: 'currency', currency: code, currencyDisplay: 'code',
@@ -62,9 +68,9 @@ if (dialog) {
       : 'Conversion unavailable. Your KWD total is unchanged.';
     status.textContent = pending ? 'Loading latest available daily rates…'
       : failure ? 'Could not load current rates. Check your connection and try Refresh rates.'
-      : cached ? 'Updated ' + new Intl.DateTimeFormat(undefined, {
+      : cached ? ' · Updated ' + new Intl.DateTimeFormat(undefined, {
         dateStyle: 'medium', timeStyle: 'short',
-      }).format(new Date(cached.updated)) + ' · Daily rates'
+      }).format(new Date(cached.updated))
       : 'Rates update daily, not in real time.';
   }
 
@@ -103,11 +109,10 @@ if (dialog) {
     return pending;
   }
 
-  document.getElementById('convert-currency').addEventListener('click', () => {
-    dialog.showModal();
-    load();
+  select.addEventListener('change', () => {
+    render();
+    if (select.value !== 'KWD') load();
   });
-  document.getElementById('close-currency').addEventListener('click', () => dialog.close());
-  select.addEventListener('change', () => { render(); load(); });
   refresh.addEventListener('click', () => load(true));
+  load();
 }

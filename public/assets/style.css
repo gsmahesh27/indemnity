@@ -30,3 +30,13 @@
 @media screen and (min-width:1101px){label[for=reason]{line-height:13px}}
 @media screen and (min-width:1101px){.service-panel>.calculate{height:40px;min-height:40px;padding:0 16px}}
 @media screen and (min-width:1600px){.service-panel>.calculate{height:44px;min-height:44px}}
+/* Choose the display currency directly beside the headline amount. */
+.amount-row{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-top:5px}.amount-row .amount{margin-top:0;min-width:0;line-height:1.2}.amount>#converted-value{font:inherit;letter-spacing:inherit;color:var(--ink);margin:0}.amount>#converted-code{display:inline-block}.inline-currency{width:155px;flex-shrink:0}.inline-currency label{font-size:9px;color:var(--muted);margin-bottom:4px}.inline-currency select{font-size:11px;height:34px;background:#f7faf3;padding:0 7px}.currency-inline-meta{display:grid;grid-template-columns:1fr 25px;gap:3px 6px;align-items:start;margin-top:6px;font-size:9px;line-height:1.5;color:var(--muted)}.currency-inline-meta #currency-status{display:inline;min-height:0;font-size:9px;line-height:1.5;margin:0}.currency-inline-meta #refresh-rates{padding:2px;min-height:22px;font-size:13px;background:transparent}.currency-inline-meta .rate-source{grid-column:1/-1;font-size:8px;line-height:1.4}.result-actions{grid-template-columns:1fr}.result-actions .print-button{margin-top:0}
+@media(max-width:1100px){.amount-row{gap:9px}.inline-currency{width:132px}.amount-row .amount{font-size:30px}.amount>#converted-code{font-size:10px;margin-left:4px}}
+@media(max-width:760px){.inline-currency{width:133px}.amount-row .amount{font-size:29px}.amount-row{align-items:center}.amount>#converted-code{display:block;margin:2px 0 0;line-height:1.2}.currency-inline-meta{margin-top:3px}.result-caption{margin-top:7px}.js .result-actions{margin-top:6px}.currency-inline-meta #refresh-rates{margin:0}}
+@media print{.inline-currency,.currency-inline-meta button{display:none!important}.currency-inline-meta{display:block}.amount-row{display:block}}
+@media screen{body:not(.js) .inline-currency{display:none}}
+.inline-currency label{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}.inline-currency select{height:36px}
+@media screen and (max-height:740px){.result-caption{margin:4px 0 5px}.breakdown h3{margin-top:8px}.breakdown .total-line{padding-top:7px}.currency-inline-meta{font-size:8.5px;line-height:1.3}.currency-inline-meta #currency-status{font-size:8.5px;line-height:1.3}.result-note{margin:6px 0}.amount-row{margin-top:3px}}
+@media screen and (max-width:760px){.amount>#converted-code{display:none}}
+@media print{.amount>#converted-code{display:inline-block}}
