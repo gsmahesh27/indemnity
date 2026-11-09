@@ -19,3 +19,14 @@
 @media screen{body:not(.js) #open-about{display:none}}
 
 .about-link{font-size:10px;color:var(--muted);text-decoration:none}.about-link:hover{text-decoration:underline;text-underline-offset:3px}.about-page{max-width:560px;padding-top:32px}.about-page .card{background:white}.about-back{display:inline-block;margin-bottom:20px;font-size:12px;text-decoration:none}.about-page .about-content{padding-top:0}
+/* Align the action with the dropdown's top edge, below its label. */
+@media screen and (min-width:1101px){.service-panel>.calculate{align-self:start;margin-top:20px;min-height:40px;padding-top:10px;padding-bottom:10px}}
+@media screen and (min-width:1600px){.service-panel>.calculate{min-height:44px}}
+.result-actions{display:grid;grid-template-columns:1.5fr 1fr;gap:10px;margin-top:auto}.result-actions .print-button{margin-top:0;width:100%;align-items:center}.result-actions button:hover{background:#dfe8d2}
+#currency-dialog{max-width:500px}.currency-content{padding-top:16px}.currency-content h2{font-size:23px;font-weight:500;margin:10px 0 12px;letter-spacing:-.5px}.currency-base{font-size:12px;line-height:1.6;color:var(--muted);margin-bottom:22px}.converted-amount{font-size:32px;letter-spacing:-1px;margin:24px 0 8px;overflow-wrap:anywhere}#converted-code{font-size:13px;color:var(--muted);letter-spacing:0}.conversion-rate{font-size:12px;color:#486039;margin:8px 0}#currency-status{font-size:11px;line-height:1.6;color:var(--muted);min-height:36px;margin:8px 0}#refresh-rates{background:#e4ecd9;border:1px solid #cdddbb;border-radius:6px;color:var(--ink);font-size:11px;padding:9px 12px}#refresh-rates:disabled{opacity:.55;cursor:wait}.currency-disclaimer{font-size:11px;line-height:1.7;border-top:1px solid var(--line);padding-top:16px;margin:22px 0 12px;color:var(--muted)}.rate-source{font-size:10px;color:#61774e;text-underline-offset:3px}
+@media screen and (max-width:760px){.js .result-actions{margin-top:10px}.result-actions .print-button{margin-top:0}.converted-amount{font-size:28px}.currency-content h2{font-size:21px}}
+@media print{.result-actions{display:none!important}}
+@media screen{body:not(.js) #convert-currency,body:not(.js) #currency-dialog{display:none}}
+@media screen and (min-width:1101px){label[for=reason]{line-height:13px}}
+@media screen and (min-width:1101px){.service-panel>.calculate{height:40px;min-height:40px;padding:0 16px}}
+@media screen and (min-width:1600px){.service-panel>.calculate{height:44px;min-height:44px}}
