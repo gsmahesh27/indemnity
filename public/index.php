@@ -10,6 +10,13 @@ function e(mixed $value): string { return htmlspecialchars((string) $value, ENT_
 function money(float $value): string { return number_format($value, 3); }
 function serviceYears(float $value): string { return rtrim(rtrim(number_format($value, 3, '.', ''), '0'), '.') . ($value === 1.0 ? ' year' : ' years'); }
 $values = ['salary' => '', 'start' => '', 'end' => date('Y-m-d'), 'housing' => '', 'transport' => '', 'incentive' => '', 'other' => '', 'basis' => 'monthly', 'reason' => 'employer'];
+$reasonHelp = [
+    'employer' => 'Your employer ended the job. This assumes you qualify for indemnity.',
+    'expiry' => 'Your contract had an agreed end date, and you worked until that date.',
+    'resignation' => 'You chose to leave a contract with no agreed end date (an indefinite contract).',
+    'fixed_resignation' => 'You left before your contract’s agreed end date. Your final settlement needs individual review.',
+    'article41' => 'Only for a dismissal that legally qualifies under Article 41(a). Not every misconduct dismissal removes indemnity.',
+];
 $result = null;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     foreach ($values as $key => $default) $values[$key] = isset($_POST[$key]) && is_string($_POST[$key]) ? trim($_POST[$key]) : '';
@@ -37,7 +44,7 @@ function attrs(string $key): string { global $errors; return isset($errors[$key]
 <div class="allowance-grid"><?php foreach (['housing' => 'Housing / rent', 'transport' => 'Transport', 'incentive' => 'Fixed incentive', 'other' => 'Other fixed allowance'] as $key => $label): ?><div class="field"><label for="<?= $key ?>"><?= $label ?></label><input id="<?= $key ?>" name="<?= $key ?>" type="number" min="0" max="1000000" step="0.001" inputmode="decimal" placeholder="0.000" value="<?= e($values[$key]) ?>"<?= attrs($key) ?>><?php errorFor($key) ?></div><?php endforeach ?></div>
 <small>Regular wage allowances only. Exclude reimbursements; don’t double count. See Rules & assumptions.</small></fieldset>
 <button type="button" class="next-step" data-view="service">Next: service details →</button></div><div class="service-panel"><div class="date-row"><?php foreach (['start' => 'Start date', 'end' => 'End date'] as $key => $label): ?><div class="field"><label for="<?= $key ?>"><?= $label ?></label><input id="<?= $key ?>" name="<?= $key ?>" type="date" min="1900-01-01" max="2200-12-31" value="<?= e($values[$key]) ?>" required<?= attrs($key) ?>><?php errorFor($key) ?></div><?php endforeach ?></div>
-<div class="field"><label for="reason">How did employment end?</label><select name="reason" id="reason"<?= attrs('reason') ?>><?php foreach (['employer' => 'Employer termination · full entitlement', 'expiry' => 'Fixed-term contract completed', 'resignation' => 'Resignation · indefinite contract', 'fixed_resignation' => 'Resignation · fixed-term contract', 'article41' => 'Dismissal under Article 41(a)'] as $key => $label): ?><option value="<?= $key ?>" <?= $values['reason'] === $key ? 'selected' : '' ?>><?= e($label) ?></option><?php endforeach ?></select><?php errorFor('reason') ?><small>For ordinary private-sector employment; special cases may differ.</small></div>
+<div class="field"><label for="reason">How did your job end?</label><select name="reason" id="reason" aria-describedby="reason-help<?= isset($errors['reason']) ? ' reason-error' : '' ?>"<?= isset($errors['reason']) ? ' aria-invalid="true"' : '' ?>><?php foreach (['employer' => 'The company ended my job', 'expiry' => 'My agreed contract period ended', 'resignation' => 'I resigned — no agreed end date', 'fixed_resignation' => 'I resigned before the agreed end date', 'article41' => 'Dismissed for serious misconduct'] as $key => $label): ?><option value="<?= $key ?>" <?= $values['reason'] === $key ? 'selected' : '' ?>><?= e($label) ?></option><?php endforeach ?></select><?php errorFor('reason') ?><small id="reason-help"><?= e($reasonHelp[$values['reason']] ?? 'Choose the option that best matches your situation.') ?></small></div>
 <button type="submit" class="calculate">Calculate indemnity <span aria-hidden="true">→</span></button><p class="privacy"><span aria-hidden="true">◇</span> No account needed. Your details aren’t stored by this app.</p></div>
 </form></section>
 <section class="card result-card" aria-labelledby="result-title" aria-live="polite"><div class="result-top"><span class="eyebrow">YOUR ESTIMATE</span><span class="result-badge">KWD</span></div>

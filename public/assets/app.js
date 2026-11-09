@@ -51,3 +51,15 @@ window.addEventListener('beforeprint', () => {
 window.addEventListener('afterprint', () => {
   printDetailsState.forEach(([details, open]) => { details.open = open; });
 });
+
+const reasonSelect = document.getElementById('reason');
+const reasonHelp = {
+  employer: 'Your employer ended the job. This assumes you qualify for indemnity.',
+  expiry: 'Your contract had an agreed end date, and you worked until that date.',
+  resignation: 'You chose to leave a contract with no agreed end date (an indefinite contract).',
+  fixed_resignation: 'You left before your contract’s agreed end date. Your final settlement needs individual review.',
+  article41: 'Only for a dismissal that legally qualifies under Article 41(a). Not every misconduct dismissal removes indemnity.',
+};
+reasonSelect.addEventListener('change', () => {
+  document.getElementById('reason-help').textContent = reasonHelp[reasonSelect.value];
+});
