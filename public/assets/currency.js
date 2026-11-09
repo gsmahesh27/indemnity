@@ -41,8 +41,8 @@ if (result) {
     const selected = select.value;
     const names = typeof Intl.DisplayNames === 'function'
       ? new Intl.DisplayNames(['en'], { type: 'currency' }) : null;
-    const codes = [...priority, ...Object.keys(rates).filter(code =>
-      !priority.includes(code) && code !== 'KWD').sort(), 'KWD'];
+    const codes = ['KWD', ...priority, ...Object.keys(rates).filter(code =>
+      !priority.includes(code) && code !== 'KWD').sort()];
     if (!codes.includes(selected)) codes.push(selected);
     select.replaceChildren(...codes.map(code => {
       const option = document.createElement('option');
