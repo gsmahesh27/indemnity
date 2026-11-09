@@ -64,3 +64,7 @@ Rates are cached only in memory for up to 15 minutes. **Refresh rates** requests
 ## Amount in words
 
 The amount in words is always visible directly beneath the headline amount. It follows the selected currency and rounds exactly as the numeric display does. KWD uses three-decimal fils, INR uses lakh/crore and paise, JPY uses whole yen, and common currencies use their major/minor unit names. For other currencies the ISO code and fractional denomination (for example, hundredths) are used rather than guessing local unit names. Unavailable rates do not produce an amount in words. Run `node tests/amount-words.mjs` for rounding, zero, singular/plural and currency-unit checks. Long amounts in words wrap naturally and may require additional vertical space.
+
+## Visual theme
+
+`public/assets/theme.css` adds a light blue, red, yellow and green accent palette without downloading external fonts. Amount wording uses its own padded full-width panel, separated from the amount and currency selector. Calculation details start collapsed on smaller/shorter screens and open on taller desktops; they can always be expanded manually. Printing temporarily expands calculation details and then restores the screen state. The About page uses the same colors in its self-contained stylesheet.

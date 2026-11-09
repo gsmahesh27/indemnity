@@ -35,3 +35,19 @@ document.getElementById('calculator-form').addEventListener('invalid', event => 
   const firstInvalid = event.currentTarget.querySelector('input:invalid, select:invalid') || event.target;
   showView(firstInvalid.closest('.pay-panel') ? 'pay' : 'service');
 }, true);
+
+// Keep the headline and wording readable without crowding shorter screens.
+const calculationDetails = document.querySelector('.calculation-details');
+if (calculationDetails) {
+  calculationDetails.open = window.matchMedia('(min-width: 761px) and (min-height: 800px)').matches;
+}
+// Include all calculation lines in a printed result, then restore the screen view.
+let printDetailsState = [];
+window.addEventListener('beforeprint', () => {
+  printDetailsState = [...document.querySelectorAll('.calculation-details, .wage-details')]
+    .map(details => [details, details.open]);
+  printDetailsState.forEach(([details]) => { details.open = true; });
+});
+window.addEventListener('afterprint', () => {
+  printDetailsState.forEach(([details, open]) => { details.open = open; });
+});
