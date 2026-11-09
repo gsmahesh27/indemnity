@@ -46,3 +46,11 @@ No submitted fields are intentionally persisted. Hosting infrastructure may main
 ## Shared hosting
 
 For a domain-root installation, copy `public/index.php`, `public/about.php` and `public/assets/` into `htdocs/`, and `src/` into `htdocs/src/`. The entry point supports both this layout and the standard `public/` web root. Upload only application files; leave tests and documentation out of the public host. The discreet footer About link opens a separate page with the project contact, gsmahesh@gmail.com.
+
+## Automatic deployment
+
+`.github/workflows/deploy.yml` deploys changes on `kuwait-eos-calculator` after PHP syntax and calculation checks pass. It uses the GitHub repository Actions secrets `FTP_SERVER` (hostname only), `FTP_USERNAME` and `FTP_PASSWORD`. Never put their values in source code. GitHub Actions runs independently of Codespaces.
+
+The default remote directory is `/htdocs`. If this domain uses a different document root, set the repository Actions **variable** `FTP_DIRECTORY` to its absolute FTP path. The upload maps `public/*` to the domain root and `src/*` to its `src/` directory. Tests, README and `.github` are not uploaded. Existing unrelated files are not deleted. Files removed from GitHub must currently be removed manually from the host.
+
+The uploader requires explicit FTPS on port 21, validates certificates and encrypts file transfers; it never falls back to unencrypted FTP. If the hosting service is down, credentials are incorrect, or verified TLS is unavailable, the run fails rather than reporting a successful deployment. Check the Actions run to confirm a real upload; saving the workflow alone does not prove the live website changed. Each successful deployment can take a few minutes. Uploads are sequential, not an atomic website release.
