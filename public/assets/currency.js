@@ -1,5 +1,7 @@
 'use strict';
-import { amountInWords } from './amount-words.js';
+// Carry the release version into imported modules as well as the entry script.
+const assetVersion = new URL(import.meta.url).searchParams.get('v') || '';
+const { amountInWords } = await import('./amount-words.js?v=' + encodeURIComponent(assetVersion));
 const endpoint = 'https://open.er-api.com/v6/latest/KWD';
 const result = document.getElementById('currency-result');
 

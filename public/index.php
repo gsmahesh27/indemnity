@@ -3,10 +3,26 @@ declare(strict_types=1);
 require (is_file(__DIR__ . '/src/Calculator.php') ? __DIR__ : dirname(__DIR__)) . '/src/Calculator.php';
 date_default_timezone_set('Asia/Kuwait');
 header('Content-Type: text/html; charset=utf-8');
+header('Cache-Control: no-store, max-age=0');
 header('X-Content-Type-Options: nosniff');
 header("Content-Security-Policy: default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:; connect-src 'self' https://open.er-api.com; base-uri 'none'; frame-ancestors 'none'; form-action 'self'");
 header('Referrer-Policy: strict-origin-when-cross-origin');
 function e(mixed $value): string { return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8'); }
+// Hash all local styles and scripts so module dependencies share the same release version.
+$assetFiles = glob(__DIR__ . '/assets/*.{css,js}', GLOB_BRACE) ?: [];
+sort($assetFiles, SORT_STRING);
+$assetHash = hash_init('sha256');
+foreach ($assetFiles as $assetFile) {
+    if (is_file($assetFile)) {
+        hash_update($assetHash, basename($assetFile));
+        hash_update_file($assetHash, $assetFile);
+    }
+}
+$assetVersion = substr(hash_final($assetHash), 0, 16);
+function assetUrl(string $path): string {
+    global $assetVersion;
+    return e($path . '?v=' . $assetVersion);
+}
 function money(float $value): string { return number_format($value, 3); }
 function serviceYears(float $value): string { return rtrim(rtrim(number_format($value, 3, '.', ''), '0'), '.') . ($value === 1.0 ? ' year' : ' years'); }
 $values = ['salary' => '', 'start' => '', 'end' => date('Y-m-d'), 'housing' => '', 'transport' => '', 'incentive' => '', 'other' => '', 'basis' => 'monthly', 'reason' => 'employer'];
@@ -29,7 +45,7 @@ function attrs(string $key): string { global $errors; return isset($errors[$key]
 ?>
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#f8fafd"><title>Kuwait EOS · Indemnity calculator</title><link rel="stylesheet" href="assets/style.css"><link rel="stylesheet" href="assets/theme.css"><script src="assets/app.js" defer></script><script type="module" src="assets/currency.js"></script></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#f8fafd"><title>Kuwait EOS · Indemnity calculator</title><link rel="stylesheet" href="<?= assetUrl('assets/style.css') ?>"><link rel="stylesheet" href="<?= assetUrl('assets/theme.css') ?>"><script src="<?= assetUrl('assets/app.js') ?>" defer></script><script type="module" src="<?= assetUrl('assets/currency.js') ?>"></script></head>
 <body data-initial-view="<?= $valid ? 'result' : (isset($errors['start']) || isset($errors['end']) || isset($errors['reason']) ? 'service' : 'pay') ?>">
 <header class="site-header"><a class="brand" href="./" aria-label="Kuwait EOS home"><span class="brand-icon">K<span>°</span></span><span>Kuwait<span class="brand-light"> EOS</span></span></a><span class="header-note"><span class="status-dot"></span> Private sector · Law No. 6 of 2010</span></header>
 <main>

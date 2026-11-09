@@ -2,6 +2,7 @@
 declare(strict_types=1);
 $nonce = base64_encode(random_bytes(18));
 header('Content-Type: text/html; charset=utf-8');
+header('Cache-Control: no-store, max-age=0');
 header('X-Content-Type-Options: nosniff');
 header("Content-Security-Policy: default-src 'self'; style-src 'nonce-$nonce'; base-uri 'none'; frame-ancestors 'none'");
 ?>
