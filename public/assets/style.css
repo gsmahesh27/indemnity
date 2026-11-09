@@ -46,3 +46,7 @@
 @media screen{body:not(.js) .amount-words{display:none}}
 @media print{.amount-words[open] p{display:block}}
 @media screen and (max-height:740px){.wage-details summary{padding:3px 0}.result-caption{margin:2px 0}.breakdown .wage-total{padding:7px 9px}}
+.amount-in-words{font-size:12px;line-height:1.5;font-weight:500;color:#37532c;margin:7px 0 5px;overflow-wrap:anywhere}.amount-in-words:empty{display:none}
+@media screen and (max-height:740px){.amount-in-words{font-size:11px;line-height:1.4;margin:4px 0}.result-card .result-caption{margin:2px 0}.result-card .wage-details summary{padding:2px 0}}
+@media screen{body:not(.js) .amount-in-words{display:none}}
+@media screen and (max-height:740px){.result-card{padding-top:12px;padding-bottom:12px}.amount-in-words{font-size:12px;line-height:1.4;margin:3px 0}.result-actions .print-button{padding-top:7px;padding-bottom:7px}.result-card .result-note{line-height:1.3}.result-card .wage-details summary{padding:1px 0}}
