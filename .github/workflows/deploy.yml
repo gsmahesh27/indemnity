@@ -31,6 +31,7 @@ jobs:
           php -v
           find public src -name '*.php' -print0 | xargs -0 -n1 php -l
           php tests/calculator.php
+          node tests/amount-words.mjs
       - name: Upload website over verified FTPS
         env:
           FTP_SERVER: ${{ secrets.FTP_SERVER }}

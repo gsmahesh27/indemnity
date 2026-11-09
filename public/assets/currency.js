@@ -1,4 +1,5 @@
 'use strict';
+import { amountInWords } from './amount-words.js';
 const endpoint = 'https://open.er-api.com/v6/latest/KWD';
 const result = document.getElementById('currency-result');
 
@@ -63,6 +64,8 @@ if (result) {
     value.textContent = available ? new Intl.NumberFormat('en', {
       style: 'currency', currency: code, currencyDisplay: 'code',
     }).format(base * rate).replace(code, '').trim() : '—';
+    document.getElementById('amount-words-text').textContent = available
+      ? amountInWords(base * rate, code) : 'Amount unavailable. Select KWD or retry the exchange rates.';
     rateLabel.textContent = available
       ? '1 KWD = ' + new Intl.NumberFormat('en', { maximumFractionDigits: 6 }).format(rate) + ' ' + code
       : 'Conversion unavailable. Your KWD total is unchanged.';
